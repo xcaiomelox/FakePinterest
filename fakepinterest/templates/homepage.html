@@ -9,10 +9,26 @@
     </title>
 </head>
 {% block body %}
-<body>
-<h1>FakePinterest - Meu primeiro site no ar</h1>
+    <body>
+    <h1>FakePinterest - Meu primeiro site no ar</h1>
 
-<h2>Agora vamos continuar o site</h2>
-</body>
+    <h2>Agora vamos continuar o site</h2>
+
+    {% block form %}
+    <form method="POST">
+    {{ form.csrf_token }}
+
+        {{ form.email.label() }}
+        {{ form.email() }}
+
+        {{ form.password.label() }}
+        {{ form.password() }}
+
+        {{ form.button() }}
+
+    </form>
+    {% endblock %}
+
+    </body>
 {% endblock %}
 </html>

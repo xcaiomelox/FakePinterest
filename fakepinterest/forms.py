@@ -10,7 +10,7 @@ class FormLogin(FlaskForm):
 
 
 class FormCreateAccount(FlaskForm):
-    email =StringField("E-mail", validators=[DataRequired(), Email()])
+    email = StringField("E-mail", validators=[DataRequired(), Email()])
     username = StringField("Usuário", validators=[DataRequired()])
     password = PasswordField("Senha", validators=[DataRequired(), Length(6, 20)])
     confirm_password = PasswordField("Confirmação de Senha", validators=[DataRequired(), EqualTo("password")])
