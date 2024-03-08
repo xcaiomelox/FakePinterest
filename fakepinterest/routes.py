@@ -13,7 +13,7 @@ def homepage():
         user = User.query.filter_by(email=formlogin.email.data).first()
         if user and bcrypt.check_password_hash(user.password, formlogin.password.data):
             login_user(user)
-        return redirect(url_for("perfil", user=user.username))
+        return redirect(url_for("perfil", id_user=user.id))
     return render_template("homepage.html", form=formlogin)
 
 
@@ -28,14 +28,19 @@ def createaccount():
         database.session.add(user)
         database.session.commit()
         login_user(user, remember=True)
-        return redirect(url_for("perfil", user=user.username))
+        return redirect(url_for("perfil", id_user=user.id))
     return render_template("createaccount.html", form=formcreateaccount)
 
 
-@app.route("/perfil/<user>")
+@app.route("/perfil/<id_user>")
 @login_required
-def perfil(user):
-    return render_template("perfil.html", user=user)
+def perfil(id_user):
+    if int(id_user) == int(current_user.id):
+        #o usuario esta vendo o proprio perfil
+        return render_template("perfil.html", user=current_user)
+    else:
+        user = User.query.get(int(id_user))
+        return render_template("perfil.html", user=user)
 
 @app.route("/logout")
 @login_required
